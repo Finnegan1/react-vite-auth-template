@@ -1,5 +1,5 @@
 {
-  "name": "uni_pdf_additor",
+  "name": "react-vite-auth-template",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -13,7 +13,8 @@
     "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-slot": "^1.0.2",
     "@supabase/supabase-js": "^2.42.5",
-    "@tanstack/react-router": "^1.26.19",
+    "@tanstack/react-router": "^1.28.9",
+    "@tanstack/router-cli": "^1.28.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "lucide-react": "^0.372.0",
@@ -23,8 +24,8 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
-    "@tanstack/router-devtools": "^1.26.19",
-    "@tanstack/router-vite-plugin": "^1.26.16",
+    "@tanstack/router-devtools": "^1.28.9",
+    "@tanstack/router-vite-plugin": "^1.28.2",
     "@types/node": "^20.12.7",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",

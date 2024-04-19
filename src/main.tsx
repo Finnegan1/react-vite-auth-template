@@ -6,18 +6,10 @@ import { routeTree } from "./routeTree.gen";
 import { RouterProvider, createRouter } from "@tanstack/react-router";
 
 // Create a new router instance
-const router = createRouter({ 
+const router = createRouter({
   routeTree,
-  defaultPendingComponent: () => (
-    <div>
-      Loading...
-    </div>
-  ),
-  defaultErrorComponent: ( {error} ) => (
-    <div>
-      Error: {error as string}
-    </div>
-  ),
+  defaultPendingComponent: () => <div>Loading...</div>,
+  defaultErrorComponent: () => <div>Error:</div>,
 });
 
 // Register the router instance for type safety
@@ -29,27 +21,24 @@ declare module "@tanstack/react-router" {
 
 const TanStackRouterDevtools =
   process.env.NODE_ENV === "production"
-    ? () => null // Render nothing in production
+    ? () => null
     : React.lazy(() =>
-        // Lazy load in development
         import("@tanstack/router-devtools").then((res) => ({
           default: res.TanStackRouterDevtools,
-          // For Embedded Mode
-          // default: res.TanStackRouterDevtoolsPanel
-        }))
+        })),
       );
 
 function App() {
   return (
-    <>
-      <RouterProvider router={router} />
-      <TanStackRouterDevtools router={router} />
-    </>
+    <div className="min-h-screen min-w-screen">
+      <RouterProvider router={ router } />
+      <TanStackRouterDevtools router={ router } />
+    </div>
   );
 }
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <App />
-  </React.StrictMode>
+  </React.StrictMode>,
 );

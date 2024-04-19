@@ -1,37 +1,69 @@
-import { Label } from "@/components/ui/label"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { Link } from "@tanstack/react-router"
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Link, useNavigate } from "@tanstack/react-router";
+import { auth } from "@/lib/auth";
+import { useState } from "react";
 
 export function Register() {
+  const navigation = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
+
+  const handleSubmit = async () => {
+    if (password == passwordConfirm) {
+      const authResult = await auth.registerEmail({ email, password });
+      if (authResult.data.user) {
+        navigation({ to: "/", replace: true });
+      }
+    }
+    navigation({ to: "/", replace: true });
+  };
+
   return (
-    <div key="1" className="w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]">
+    <div
+      key="1"
+      className="h-full w-full lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px]"
+    >
       <div className="flex items-center justify-center py-12">
         <div className="mx-auto w-[350px] space-y-6">
           <div className="space-y-2 text-center">
             <h1 className="text-3xl font-bold">Register</h1>
-            <p className="text-gray-500 dark:text-gray-400">Enter your details below to create a new account</p>
+            <p className="text-gray-500 dark:text-gray-400">
+              Enter your details below to create a new account
+            </p>
           </div>
-          <div className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="first-name">First Name</Label>
-                <Input id="first-name" placeholder="First Name" required type="text" />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="last-name">Last Name</Label>
-                <Input id="last-name" placeholder="Last Name" required type="text" />
-              </div>
-            </div>
+          <div className="space-y-6">
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
-              <Input id="email" placeholder="m@example.com" required type="email" />
+              <Input
+                id="email"
+                placeholder="m@example.com"
+                required
+                type="email"
+                onChange={(e) => setEmail(e.target.value)}
+              />
             </div>
             <div className="space-y-2">
               <Label htmlFor="password">Password</Label>
-              <Input id="password" required type="password" />
+              <Input
+                id="password"
+                required
+                type="password"
+                onChange={(e) => setPassword(e.target.value)}
+              />
             </div>
-            <Button className="w-full" type="submit">
+            <div className="space-y-2">
+              <Label htmlFor="password">Confirm Password</Label>
+              <Input
+                id="passwordConfirm"
+                required
+                type="password"
+                onChange={(e) => setPasswordConfirm(e.target.value)}
+              />
+            </div>
+            <Button className="w-full" type="submit" onClick={handleSubmit}>
               Register
             </Button>
             <Button className="w-full" variant="outline">
@@ -39,14 +71,14 @@ export function Register() {
             </Button>
           </div>
           <div className="mt-4 text-center text-sm">
-            Already have an account?
+            {"Already have an account? "}
             <Link className="underline" to="/login">
               Login
             </Link>
           </div>
         </div>
       </div>
-      <div className="hidden bg-gray-100 lg:block dark:bg-gray-800">
+      <div className="hidden bg-gray-100 dark:bg-gray-800 lg:block">
         <img
           alt="Cover Image"
           className="h-full w-full object-cover"
@@ -60,5 +92,5 @@ export function Register() {
         />
       </div>
     </div>
-  )
+  );
 }
